@@ -9,7 +9,10 @@ if vim.opt.colorcolumn then
 end
 
 -- allow mouse selection
-vim.opt.mouse='c'
+vim.opt.mouse='a'
+
+-- use the mouse to change focus between split windows
+--vim.opt.mousefocus=true
 
 -- set the color scheme
 vim.opt.termguicolors=true
@@ -48,17 +51,11 @@ vim.opt.writebackup=false
 vim.opt.incsearch=true
 
 -- Highlight matched search tokens.
---vim.opt.hlsearch=true
---vim.cmd([[
---highlight Search guibg=maroon
---highlight Search ctermbg=9
---]])
-
--- use the mouse to change focus between split windows
---vim.opt.mousefocus=true
-
--- enable mouse selection
---vim.opt.mouse='a'
+vim.opt.hlsearch=true
+vim.cmd([[
+highlight Search guibg=maroon
+highlight Search ctermbg=9
+]])
 
 -- visual bell
 vim.opt.visualbell=false
