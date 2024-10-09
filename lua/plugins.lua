@@ -20,7 +20,11 @@ return require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
 
   -- snazzy buffer line
-  use 'akinsho/bufferline.nvim'
+  use {
+    'akinsho/bufferline.nvim',
+    tag = "*",
+    requires = 'nvim-tree/nvim-web-devicons'
+  }
 
   -- improved default UI
   use 'stevearc/dressing.nvim'
@@ -29,23 +33,62 @@ return require('packer').startup(function(use)
   use 'folke/flash.nvim'
 
   -- git integration within buffers
-  use 'lewis6991/gitsigns.nvim'
+  use {
+    'lewis6991/gitsigns.nvim',
+    config = function()
+      require('gitsigns').setup()
+    end,
+  }
 
   -- indent guides
   use 'lukas-reineke/indent-blankline.nvim'
 
   -- lua-rocket-powered status line
-  use 'nvim-lualine/lualine.nvim'
+  use {
+    'nvim-lualine/lualine.nvim',
+    requires = { 'nvim-tree/nvim-web-devicons', opt = true },
+  }
 
   -- a package manager for language servers, linters, etc: super dweeb stuff
-  use 'williamboman/mason-lspconfig.nvim'
-  use 'williamboman/mason.nvim'
+  use {
+    "williamboman/mason.nvim",
+    config = function()
+      require("mason").setup()
+    end,
+  }
+  use {
+    "williamboman/mason-lspconfig.nvim",
+    config = function()
+      require("mason-lspconfig").setup()
+    end,
+  }
 
   -- pre-fab config files for language servers
-  use 'neovim/nvim-lspconfig'
+  use {
+    'neovim/nvim-lspconfig',
+    config = function()
+      local lspconfig = require('lspconfig')
+      lspconfig.gopls.setup{}
+      lspconfig.clangd.setup{}
+      lspconfig.pyright.setup{}
+      lspconfig.rust_analyzer.setup{ 
+        -- Server-specific settings. See `:help lspconfig-setup`
+        settings = {
+          ['rust-analyzer'] = {},
+        },
+      }
+    end,
+  }
 
   -- file manager in a buffer
-  use 'nvim-neo-tree/neo-tree.nvim'
+  use {
+    'nvim-neo-tree/neo-tree.nvim',
+    requires = {
+      'nvim-lua/plenary.nvim',
+      'nvim-tree/nvim-web-devicons',
+      'MunifTanjim/nui.nvim',
+    },
+  }
 
   -- UI component library
   use 'MunifTanjim/nui.nvim'
@@ -54,11 +97,24 @@ return require('packer').startup(function(use)
   --use 'nvim-pack/nvim-spectre'
 
   -- syntax highlighting, kicked up a notch
-  use 'nvim-treesitter/nvim-treesitter'
-  use 'nvim-treesitter/nvim-treesitter-textobjects'
+  --use {
+  --  "nvim-treesitter/nvim-treesitter",
+  --  run = function()
+  --    require("nvim-treesitter.install").update({ with_sync = true })
+  --  end,
+  --  config = function()
+  --    require("configs.treesitter")
+  --  end,
+  --}
+  --use {
+  --  "windwp/nvim-ts-autotag",
+  --  after = "nvim-treesitter",
+  --}
+  --use 'nvim-treesitter/nvim-treesitter-textobjects'
+  --]]
 
   -- "all the lua functions I don't want to write twice"
-  --use 'nvim-lua/plenary.nvim'
+  use 'nvim-lua/plenary.nvim'
 
   -- highlighter of TODO:, FIXME:, and other such comments
   use 'folke/todo-comments.nvim'
