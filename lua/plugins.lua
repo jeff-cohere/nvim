@@ -22,8 +22,11 @@ return require('packer').startup(function(use)
   -- snazzy buffer line
   use {
     'akinsho/bufferline.nvim',
+    config = function()
+      require("bufferline").setup{}
+    end,
+    requires = 'nvim-tree/nvim-web-devicons',
     tag = "*",
-    requires = 'nvim-tree/nvim-web-devicons'
   }
 
   -- improved default UI
@@ -46,6 +49,12 @@ return require('packer').startup(function(use)
   -- lua-rocket-powered status line
   use {
     'nvim-lualine/lualine.nvim',
+    config = function()
+      require('lualine').setup()
+    end,
+    options = {
+      theme = 'gruvbox',
+    },
     requires = { 'nvim-tree/nvim-web-devicons', opt = true },
   }
 
@@ -83,6 +92,9 @@ return require('packer').startup(function(use)
   -- file manager in a buffer
   use {
     'nvim-neo-tree/neo-tree.nvim',
+    config = function() 
+      require("neo-tree").setup{}
+    end,
     requires = {
       'nvim-lua/plenary.nvim',
       'nvim-tree/nvim-web-devicons',
