@@ -14,10 +14,12 @@ vim.opt.mouse='a'
 -- use the mouse to change focus between split windows
 --vim.opt.mousefocus=true
 
--- set the color scheme
+-- try to set the color scheme
 vim.opt.termguicolors=true
 vim.opt.background='dark'
-vim.cmd.colorscheme('gruvbox')
+local success, result = pcall(function()
+  vim.cmd.colorscheme('gruvbox')
+end)
 
 vim.opt.foldmethod='indent'
 vim.opt.foldenable=false
