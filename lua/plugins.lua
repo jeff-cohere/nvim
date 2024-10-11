@@ -141,7 +141,152 @@ return require('packer').startup(function(use)
   use 'folke/which-key.nvim'
 
   -- "fast as FUCK" auto-completion
-  use 'ms-jpq/coq_nvim'
+  --  use 'ms-jpq/coq_nvim'
+
+  -- snippets for auto-completion
+  use {
+    'dcampos/nvim-snippy',
+    config = function()
+      require('snippy').setup{
+        mappings = {
+          is = {
+            ['<Tab>'] = 'expand_or_advance',
+            ['<S-Tab>'] = 'previous',
+          },
+          nx = {
+            ['<leader>x'] = 'cut_text',
+          },
+        },
+      }
+    end,
+  }
+
+  -- neovim-flavored auto-completion
+  use {
+    'hrsh7th/nvim-cmp',
+    requires = {
+      'hrsh7th/cmp-nvim-lsp',
+      'hrsh7th/cmp-buffer',
+      'hrsh7th/cmp-path',
+      'hrsh7th/cmp-cmdline',
+    },
+    config = function()
+      local has_words_before = function()
+        unpack = unpack or table.unpack
+        local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+        return col ~= 0 and
+          vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+      end
+
+      local snippy = require('snippy')
+      local cmp = require('cmp')
+
+      cmp.setup{
+        completion = {
+          autocomplete = false, -- not while I'm typing, please
+        },
+
+        snippet = {
+          expand = function(args) snippy.expand_snippet(args.body) end,
+        },
+
+        formatting = {
+          format = function(entry, vim_item)
+            -- fancy icons and a name of kind
+            local import_lspkind, lspkind = pcall(require, "lspkind")
+            if import_lspkind then
+              vim_item.kind = lspkind.presets.default[vim_item.kind]
+            end
+
+            -- limit completion width
+            local ELLIPSIS_CHAR = '…'
+            local MAX_LABEL_WIDTH = 35
+            local label = vim_item.abbr
+            local truncated_label = vim.fn.strcharpart(label, 0, MAX_LABEL_WIDTH)
+            if truncated_label ~= label then
+              vim_item.abbr = truncated_label .. ELLIPSIS_CHAR
+            end
+
+            -- set a name for each source
+            vim_item.menu = ({
+              buffer = "[Buff]",
+              nvim_lsp = "[LSP]",
+              snippy = "[Snippy]",
+              nvim_lua = "[Lua]",
+              latex_symbols = "[Latex]",
+            })[entry.source.name]
+            return vim_item
+          end,
+        },
+
+        sources = {
+          {name = 'nvim_lsp'},
+          {name = 'snippy'},
+          {name = 'buffer', keyword_length = 1},
+        },
+
+        window = {
+          completion = cmp.config.window.bordered(),
+          documentation = cmp.config.window.bordered(),
+        },
+
+        mapping = {
+          ['<CR>'] = cmp.mapping.confirm({ select = true }),
+          ["<Tab>"] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+              cmp.select_next_item()
+            elseif snippy.can_expand_or_advance() then
+              snippy.expand_or_advance()
+            elseif has_words_before() then
+              cmp.complete()
+            else
+              fallback()
+            end
+          end, { "i", "s" }),
+          ["<S-Tab>"] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+              cmp.select_prev_item()
+            elseif snippy.can_jump(-1) then
+              snippy.previous()
+            else
+              fallback()
+            end
+          end, { "i", "s" }),
+        },
+      }
+
+      -- LSP configuration
+      local capabilities = require('cmp_nvim_lsp').default_capabilities()
+      local lspconfig = require('lspconfig')
+      lspconfig.clangd.setup{
+        capabilities = capabilities,
+      }
+      lspconfig.gopls.setup{
+        capabilities = capabilities,
+      }
+      lspconfig.pyright.setup{
+        capabilities = capabilities,
+      }
+    end
+  }
+
+  use {
+    'dcampos/cmp-snippy',
+    config = function()
+      require('cmp').setup {
+        snippet = {
+          expand = function(args)
+            require('snippy').expand_snippet(args.body)
+          end
+        },
+        sources = {
+          {
+            name = 'snippy',
+          }
+        }
+      }
+    end
+  }
 
   -- highlight trailing whitespace
   --use 'bronson/vim-trailing-whitespace'
