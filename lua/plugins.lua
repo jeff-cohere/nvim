@@ -67,15 +67,10 @@ return require('packer').startup(function(use)
   }
   use {
     "williamboman/mason-lspconfig.nvim",
+    after = {'mason.nvim', 'nvim-lspconfig'},
     config = function()
       require("mason-lspconfig").setup()
-    end,
-  }
 
-  -- pre-fab config files for language servers
-  use {
-    'neovim/nvim-lspconfig',
-    config = function()
       local lspconfig = require('lspconfig')
       lspconfig.gopls.setup{}
       lspconfig.clangd.setup{}
@@ -86,7 +81,13 @@ return require('packer').startup(function(use)
           ['rust-analyzer'] = {},
         },
       }
+    end,
+  }
 
+  -- pre-fab config files for language servers
+  use {
+    'neovim/nvim-lspconfig',
+    config = function()
       -- Show line diagnostics automatically in hover window
       vim.diagnostic.config{
         virtual_text = false
