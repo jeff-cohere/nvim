@@ -44,7 +44,12 @@ return require('packer').startup(function(use)
   }
 
   -- indent guides
-  use 'lukas-reineke/indent-blankline.nvim'
+  use {
+    'lukas-reineke/indent-blankline.nvim',
+    config = function()
+      require("ibl").setup()
+    end,
+  }
 
   -- lua-rocket-powered status line
   use {
@@ -147,9 +152,6 @@ return require('packer').startup(function(use)
 
   -- clippy for key bindings
   use 'folke/which-key.nvim'
-
-  -- "fast as FUCK" auto-completion
-  --  use 'ms-jpq/coq_nvim'
 
   -- snippets for auto-completion
   use {
