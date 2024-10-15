@@ -232,12 +232,11 @@ return require('packer').startup(function(use)
           end,
         },
 
-        sources = cmp.config.sources({
+        sources = cmp.config.sources{
           {name = 'nvim_lsp'},
           {name = 'snippy'},
-        }, {
           {name = 'buffer'},
-        }),
+        },
 
         window = {
           completion = cmp.config.window.bordered(),
@@ -289,6 +288,7 @@ return require('packer').startup(function(use)
 
   use {
     'dcampos/cmp-snippy',
+    after = {'nvim-cmp'},
     config = function()
       require('cmp').setup {
         snippet = {
