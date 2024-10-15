@@ -174,6 +174,7 @@ return require('packer').startup(function(use)
   -- neovim-flavored auto-completion
   use {
     'hrsh7th/nvim-cmp',
+    after = {'nvim-snippy'},
     requires = {
       'hrsh7th/cmp-nvim-lsp',
       'hrsh7th/cmp-buffer',
@@ -197,7 +198,9 @@ return require('packer').startup(function(use)
         },
 
         snippet = {
-          expand = function(args) snippy.expand_snippet(args.body) end,
+          expand = function(args)
+            snippy.expand_snippet(args.body)
+          end,
         },
 
         formatting = {
@@ -229,18 +232,19 @@ return require('packer').startup(function(use)
           end,
         },
 
-        sources = {
+        sources = cmp.config.sources({
           {name = 'nvim_lsp'},
           {name = 'snippy'},
-          {name = 'buffer', keyword_length = 1},
-        },
+        }, {
+          {name = 'buffer'},
+        }),
 
         window = {
           completion = cmp.config.window.bordered(),
           documentation = cmp.config.window.bordered(),
         },
 
-        mapping = {
+        mapping = cmp.mapping.preset.insert{
           ['<CR>'] = cmp.mapping.confirm({ select = true }),
           ["<Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
@@ -268,13 +272,16 @@ return require('packer').startup(function(use)
       -- LSP configuration
       local capabilities = require('cmp_nvim_lsp').default_capabilities()
       local lspconfig = require('lspconfig')
-      lspconfig.clangd.setup{
+      lspconfig.clangd.setup {
         capabilities = capabilities,
       }
-      lspconfig.gopls.setup{
+      lspconfig.gopls.setup {
         capabilities = capabilities,
       }
-      lspconfig.pyright.setup{
+      lspconfig.pyright.setup {
+        capabilities = capabilities,
+      }
+      lspconfig.rust_analyzer.setup {
         capabilities = capabilities,
       }
     end
