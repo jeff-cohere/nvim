@@ -39,7 +39,7 @@ return require('packer').startup(function(use)
   use {
     'lewis6991/gitsigns.nvim',
     config = function()
-      require('gitsigns').setup()
+      require('gitsigns').setup{}
     end,
   }
 
@@ -47,7 +47,7 @@ return require('packer').startup(function(use)
   use {
     'lukas-reineke/indent-blankline.nvim',
     config = function()
-      require("ibl").setup()
+      require("ibl").setup{}
     end,
   }
 
@@ -55,7 +55,7 @@ return require('packer').startup(function(use)
   use {
     'nvim-lualine/lualine.nvim',
     config = function()
-      require('lualine').setup()
+      require('lualine').setup{}
     end,
     options = {
       theme = 'gruvbox',
@@ -67,14 +67,17 @@ return require('packer').startup(function(use)
   use {
     "williamboman/mason.nvim",
     config = function()
-      require("mason").setup()
+      require("mason").setup{}
     end,
   }
   use {
     "williamboman/mason-lspconfig.nvim",
-    after = {'mason.nvim', 'nvim-lspconfig'},
+    after = {
+      'mason.nvim',
+      'nvim-lspconfig',
+    },
     config = function()
-      require("mason-lspconfig").setup()
+      require("mason-lspconfig").setup{}
 
       local lspconfig = require('lspconfig')
       lspconfig.gopls.setup{}
@@ -95,7 +98,7 @@ return require('packer').startup(function(use)
     config = function()
       -- Show line diagnostics automatically in hover window
       vim.diagnostic.config{
-        virtual_text = false
+        virtual_text = false,
       }
       vim.o.updatetime = 250
       vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]]
@@ -174,7 +177,10 @@ return require('packer').startup(function(use)
   -- neovim-flavored auto-completion
   use {
     'hrsh7th/nvim-cmp',
-    after = {'nvim-snippy'},
+    after = {
+      'nvim-snippy',
+      'nvim-lspconfig'
+    },
     requires = {
       'hrsh7th/cmp-nvim-lsp',
       'hrsh7th/cmp-buffer',
@@ -182,6 +188,22 @@ return require('packer').startup(function(use)
       'hrsh7th/cmp-cmdline',
     },
     config = function()
+      -- LSP configuration
+      local capabilities = require('cmp_nvim_lsp').default_capabilities()
+      local lspconfig = require('lspconfig')
+      lspconfig.clangd.setup {
+        capabilities = capabilities,
+      }
+      lspconfig.gopls.setup {
+        capabilities = capabilities,
+      }
+      lspconfig.pyright.setup {
+        capabilities = capabilities,
+      }
+      lspconfig.rust_analyzer.setup {
+        capabilities = capabilities,
+      }
+
       local has_words_before = function()
         unpack = unpack or table.unpack
         local line, col = unpack(vim.api.nvim_win_get_cursor(0))
@@ -222,8 +244,9 @@ return require('packer').startup(function(use)
 
             -- set a name for each source
             vim_item.menu = ({
-              buffer = "[Buff]",
+              buffer = "[Buffer]",
               nvim_lsp = "[LSP]",
+              path = "[Path]",
               snippy = "[Snippy]",
               nvim_lua = "[Lua]",
               latex_symbols = "[Latex]",
@@ -232,19 +255,16 @@ return require('packer').startup(function(use)
           end,
         },
 
-        sources = cmp.config.sources{
+        sources = {
+          {name = 'buffer', keyword_length = 3},
           {name = 'nvim_lsp'},
+          {name = 'path'},
           {name = 'snippy'},
-          {name = 'buffer'},
         },
 
-        window = {
-          completion = cmp.config.window.bordered(),
-          documentation = cmp.config.window.bordered(),
-        },
-
-        mapping = cmp.mapping.preset.insert{
+        mapping = {
           ['<CR>'] = cmp.mapping.confirm({ select = true }),
+
           ["<Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
               cmp.select_next_item()
@@ -256,6 +276,7 @@ return require('packer').startup(function(use)
               fallback()
             end
           end, { "i", "s" }),
+
           ["<S-Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
               cmp.select_prev_item()
@@ -266,29 +287,20 @@ return require('packer').startup(function(use)
             end
           end, { "i", "s" }),
         },
-      }
 
-      -- LSP configuration
-      local capabilities = require('cmp_nvim_lsp').default_capabilities()
-      local lspconfig = require('lspconfig')
-      lspconfig.clangd.setup {
-        capabilities = capabilities,
-      }
-      lspconfig.gopls.setup {
-        capabilities = capabilities,
-      }
-      lspconfig.pyright.setup {
-        capabilities = capabilities,
-      }
-      lspconfig.rust_analyzer.setup {
-        capabilities = capabilities,
+        window = {
+          completion = cmp.config.window.bordered(),
+          documentation = cmp.config.window.bordered(),
+        },
       }
     end
   }
 
   use {
     'dcampos/cmp-snippy',
-    after = {'nvim-cmp'},
+    after = {
+      'nvim-cmp',
+    },
     config = function()
       require('cmp').setup {
         snippet = {
@@ -297,19 +309,11 @@ return require('packer').startup(function(use)
           end
         },
         sources = {
-          {
-            name = 'snippy',
-          }
+          { name = 'snippy' },
         }
       }
     end
   }
-
-  -- highlight trailing whitespace
-  --use 'bronson/vim-trailing-whitespace'
-
-  -- Which lines have changed since our last Git commit?
-  --use 'airblade/vim-gitgutter'
 
   -------------------
   -- color schemes --

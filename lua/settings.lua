@@ -89,6 +89,9 @@ vim.opt.lazyredraw=true
 -- use a ruler at the bottom line to indicate location in a file
 vim.opt.ruler=true
 
+-- \reload -> reload configuration and plugins
+vim.keymap.set('n', '<Leader>rc', ':source $MYVIMRC<CR>')
+
 -- highlight non-ASCII characters
 vim.cmd([[
 syntax match nonascii "[^\x00-\x7F]"
