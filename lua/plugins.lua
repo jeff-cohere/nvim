@@ -78,17 +78,6 @@ return require('packer').startup(function(use)
     },
     config = function()
       require("mason-lspconfig").setup{}
-
-      local lspconfig = require('lspconfig')
-      lspconfig.gopls.setup{}
-      lspconfig.clangd.setup{}
-      lspconfig.pyright.setup{}
-      lspconfig.rust_analyzer.setup{ 
-        -- Server-specific settings. See `:help lspconfig-setup`
-        settings = {
-          ['rust-analyzer'] = {},
-        },
-      }
     end,
   }
 
@@ -191,10 +180,15 @@ return require('packer').startup(function(use)
       -- LSP configuration
       local capabilities = require('cmp_nvim_lsp').default_capabilities()
       local lspconfig = require('lspconfig')
+
+      -- server-specific settings. See `:help lspconfig-setup`
       lspconfig.clangd.setup {
         capabilities = capabilities,
       }
       lspconfig.gopls.setup {
+        capabilities = capabilities,
+      }
+      lspconfig.lua_ls.setup {
         capabilities = capabilities,
       }
       lspconfig.pyright.setup {
@@ -202,6 +196,9 @@ return require('packer').startup(function(use)
       }
       lspconfig.rust_analyzer.setup {
         capabilities = capabilities,
+        settings = {
+          ['rust-analyzer'] = {},
+        },
       }
 
       local has_words_before = function()

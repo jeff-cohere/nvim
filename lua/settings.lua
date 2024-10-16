@@ -1,6 +1,14 @@
+-- see https://github.com/nvim-lua/kickstart.nvim/blob/master/init.lua
+-- for some useful hacks here
+
 -- disable UTF-8
 --vim.opt.encoding = 'iso-8859-15'
 --vim.opt.fileencoding = 'iso-8859-15'
+
+-- Set <space> as the leader key
+-- See `:help mapleader`
+vim.g.mapleader = ' '
+vim.g.maplocalleader = ' '
 
 -- show the 80th column
 if vim.opt.colorcolumn then
@@ -13,6 +21,14 @@ vim.opt.mouse='a'
 
 -- use the mouse to change focus between split windows
 --vim.opt.mousefocus=true
+
+-- syncronize the clipboard with the OЅ (asynchronously)
+vim.schedule(function()
+  vim.opt.clipboard = 'unnamedplus'
+end)
+
+-- update more frequently
+vim.opt.updatetime = 250
 
 -- try to set the color scheme
 vim.opt.termguicolors=true
@@ -71,8 +87,9 @@ vim.opt.showmatch=true
 -- split new windows below old ones
 vim.opt.splitbelow=true
 
--- allow lots of mistakes
+-- allow lots of mistakes and save history
 vim.opt.undolevels=1024
+vim.opt.undofile=true
 
 -- don't fret about vi
 vim.opt.compatible=false
@@ -80,8 +97,9 @@ vim.opt.compatible=false
 -- special character support
 vim.opt.digraph=true
 
--- case insensitive searching
+-- case insensitive searching with a kick
 vim.opt.ignorecase=true
+vim.opt.smartcase=true
 
 -- don't update the screen when using macros
 vim.opt.lazyredraw=true
