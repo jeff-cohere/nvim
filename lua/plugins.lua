@@ -262,6 +262,9 @@ return require('packer').startup(function(use)
           {name = 'snippy'},
         },
 
+        -- preselect a menu item
+        preselect = cmp.PreselectMode.Item,
+
         mapping = {
           ['<CR>'] = cmp.mapping.confirm({ select = true }),
 
