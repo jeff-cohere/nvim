@@ -10,6 +10,9 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
+-- add a sign column to avoid shifting
+vim.opt.signcolumn = 'yes' -- yup, that's 'yes', not true
+
 -- show the 80th column
 if vim.opt.colorcolumn then
   vim.opt.colorcolumn = '80'
