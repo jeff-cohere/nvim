@@ -274,7 +274,7 @@ return require('packer').startup(function(use)
               cmp.select_next_item(select_opts)
             elseif vim.snippet.active({direction = 1}) then
               vim.snippet.jump(1)
-            elseif col == 0 or vim.fn.getline('.'):sub(col, col).match('%s') then
+            elseif has_words_before() then
               cmp.complete()
             else
               fallback()
