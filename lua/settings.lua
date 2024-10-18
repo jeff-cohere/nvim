@@ -118,3 +118,8 @@ vim.cmd([[
 syntax match nonascii "[^\x00-\x7F]"
 highlight nonascii guibg=Red ctermbg=2
 ]])
+
+-- set up `mapleader` and `maplocalleader` before loading plugins so mappings
+-- are correct.
+vim.g.mapleader = " "
+vim.g.maplocalleader = "\\"

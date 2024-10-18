@@ -7,3 +7,4 @@ foo.*
 *.log
 data
 plugin/
+lazy-lock.json
