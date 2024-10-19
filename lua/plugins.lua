@@ -25,7 +25,8 @@ require("lazy").setup({
       config = function()
         require("bufferline").setup{}
       end,
-      requires = 'nvim-tree/nvim-web-devicons',
+      dependencies = 'nvim-tree/nvim-web-devicons',
+      versions = '*',
     },
 
     -- improved default UI
@@ -59,7 +60,7 @@ require("lazy").setup({
       options = {
         theme = 'gruvbox',
       },
-      requires = { 'nvim-tree/nvim-web-devicons', opt = true },
+      dependencies = { 'nvim-tree/nvim-web-devicons', lazy = true },
     },
 
     -- a package manager for language servers, linters, etc: super dweeb stuff
@@ -141,10 +142,10 @@ require("lazy").setup({
     -- file manager in a buffer
     {
       'nvim-neo-tree/neo-tree.nvim',
-      config = function() 
+      config = function()
         require("neo-tree").setup{}
       end,
-      requires = {
+      dependencies = {
         'nvim-lua/plenary.nvim',
         'nvim-tree/nvim-web-devicons',
         'MunifTanjim/nui.nvim',
@@ -153,26 +154,6 @@ require("lazy").setup({
 
     -- UI component library
     'MunifTanjim/nui.nvim',
-
-    -- crazy-ass find/replace with dark powers
-    --'nvim-pack/nvim-spectre',
-
-    -- syntax highlighting, kicked up a notch
-    --{
-    --  "nvim-treesitter/nvim-treesitter",
-    --  run = function()
-    --    require("nvim-treesitter.install").update({ with_sync = true })
-    --  end,
-    --  config = function()
-    --    require("configs.treesitter")
-    --  end,
-    --},
-    --{
-    --  "windwp/nvim-ts-autotag",
-    --  after = "nvim-treesitter",
-    --},
-    --'nvim-treesitter/nvim-treesitter-textobjects',
-    --]]
 
     -- "all the lua functions I don't want to write twice"
     'nvim-lua/plenary.nvim',
@@ -192,13 +173,6 @@ require("lazy").setup({
     -- neovim-flavored auto-completion
     {
       'hrsh7th/nvim-cmp',
-      requires = {
-        'nvim-lspconfig',
-        'hrsh7th/cmp-nvim-lsp',
-        'hrsh7th/cmp-buffer',
-        'hrsh7th/cmp-path',
-        'hrsh7th/cmp-cmdline',
-      },
       config = function()
         local has_words_before = function()
           unpack = unpack or table.unpack
@@ -291,14 +265,22 @@ require("lazy").setup({
             documentation = cmp.config.window.bordered(),
           },
         }
-      end
+      end,
+
+      dependencies = {
+        'nvim-lspconfig',
+        'hrsh7th/cmp-nvim-lsp',
+        'hrsh7th/cmp-buffer',
+        'hrsh7th/cmp-path',
+        'hrsh7th/cmp-cmdline',
+      },
     },
 
     -- support for snippets based on vim.snippet (neovim 0.10+)
     {
       "garymjr/nvim-snippets",
       create_cmp_source = true, -- creates 'snippets' source
-      requires = {'hrsh7th/nvim-cmp'},
+      dependencies = {'hrsh7th/nvim-cmp'},
     },
 
     -------------------
