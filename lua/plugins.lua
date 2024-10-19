@@ -217,7 +217,9 @@ require("lazy").setup({
 
           snippet = {
             expand = function(args)
-              vim.snippet.expand(args.body) -- vim 0.10+ has its own snippets
+              -- a snippet engine is required by nvim-cmp :-/
+              -- fortunately, vim 0.10+ has its own
+              vim.snippet.expand(args.body)
             end,
           },
 
@@ -243,7 +245,6 @@ require("lazy").setup({
                 buffer = "[Buffer]",
                 nvim_lsp = "[LSP]",
                 path = "[Path]",
-                snippets = "[Snippets]",
               })[entry.source.name]
               return vim_item
             end,
@@ -258,20 +259,23 @@ require("lazy").setup({
           -- preselect a menu item
           preselect = cmp.PreselectMode.Item,
 
-          mapping = {
-            --["<Space>"] = cmp.mapping.complete(),
-            ["<Tab>"] = cmp.mapping(function(fallback) -- tab autocompletion
+          -- supertab!
+          mapping = cmp.mapping.preset.insert({
+            ['<Enter>'] = cmp.mapping.confirm({select = true }),
+            ['<Tab>'] = cmp.mapping(function(fallback) -- tab autocompletion
+              cmp.complete()
               if cmp.visible() then
                 cmp.select_next_item(select_opts)
               elseif vim.snippet.active({direction = 1}) then
                 require('snippets').expand_or_jump()
               elseif has_words_before() then
                 cmp.complete()
+                cmp.select_next_item(select_opts)
               else
-                fallback()
+                fallback() -- sends mapped key (probably '<Tab>')
               end
-            end, { "i", "s" }),
-            ["<S-Tab>"] = cmp.mapping(function(fallback) -- shift-tab backwards
+            end, { 'i', 's' }),
+            ['<S-Tab>'] = cmp.mapping(function(fallback) -- shift-tab backwards
               if cmp.visible() then
                 cmp.select_prev_item(select_opts)
               elseif vim.snippet.active({direction = -1}) then
@@ -279,8 +283,8 @@ require("lazy").setup({
               else
                 fallback()
               end
-            end, { "i", "s" }),
-          },
+            end, { 'i', 's' }),
+          }),
 
           window = {
             completion = cmp.config.window.bordered(),
