@@ -322,6 +322,6 @@ require("lazy").setup({
   -- colorscheme used when installing plugins
   install = { colorscheme = { "vim-one" } },
 
-  -- automatically check for plugin updates
-  checker = { enabled = true },
+  -- automatically check for plugin updates?
+  checker = { enabled = false },
 })
