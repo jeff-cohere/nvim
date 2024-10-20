@@ -149,9 +149,16 @@ require("lazy").setup({
 
         -- pass this to cmp.select_{prev/next}_item for insert-selection-in-situ
         local select_opt = {behavior = cmp.SelectBehavior.Insert}
-        -- key mapping function for close-and-passthrough (supertab <CR>, <Space>)
+        -- key mapping function for supertab <CR>, <Space>
         local close_and_passthrough = function(fallback)
           cmp.close()
+          fallback()
+        end
+        -- key mapping function for supertab <BS>
+        local close_if_empty_and_passthrough = function(fallback)
+          if not has_words_before() then
+            cmp.close()
+          end
           fallback()
         end
 
@@ -221,6 +228,7 @@ require("lazy").setup({
             -- <CR> and <Space> close the menu and do a passthrough
             ['<CR>'] = cmp.mapping(close_and_passthrough),
             ['<Space>'] = cmp.mapping(close_and_passthrough),
+            ['<BS>'] = cmp.mapping(close_if_empty_and_passthrough),
             ['<Tab>'] = cmp.mapping(function(fallback) -- tab autocompletion
               if has_words_before() then -- not at beginning of line
                 cmp.complete()
