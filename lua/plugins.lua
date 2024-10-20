@@ -72,13 +72,26 @@ require("lazy").setup({
     },
     {
       "williamboman/mason-lspconfig.nvim",
-      after = {
+      config = function()
+        require("mason-lspconfig").setup{
+          ensure_installed = {
+            "bashls",
+            "clangd",
+            "cssls",
+            "dockerls",
+            "gopls",
+            "html",
+            "jsonls",
+            "pyright",
+            "sqlls",
+            "yamlls"
+          },
+        }
+      end,
+      dependencies = {
         'mason.nvim',
         'nvim-lspconfig',
       },
-      config = function()
-        require("mason-lspconfig").setup{}
-      end,
     },
 
     -- pre-fab config files for language servers
@@ -130,6 +143,9 @@ require("lazy").setup({
 
           settings = {
             Lua = {
+              diagnostics = {
+                globals = {'vim'}, -- dear lua_ls: `vim` is a thing
+              },
               runtime = {
                 version = 'LuaJIT',
               },
@@ -217,10 +233,8 @@ require("lazy").setup({
       'hrsh7th/nvim-cmp',
       config = function()
         local has_words_before = function()
-          unpack = unpack or table.unpack
-          local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-          return col ~= 0 and
-          vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+          local cursor = vim.api.nvim_win_get_cursor(0)
+          return (vim.api.nvim_buf_get_lines(0, cursor[1] - 1, cursor[1], true)[1] or ''):sub(cursor[2], cursor[2]):match('%s')
         end
 
         local cmp = require('cmp')
@@ -292,22 +306,18 @@ require("lazy").setup({
             ['<Space>'] = cmp.mapping.confirm({select = true }),
             ['<Tab>'] = cmp.mapping(function(fallback) -- tab autocompletion
               cmp.complete()
-              if cmp.visible() then
+              if cmp.visible() then -- completion menu present
                 cmp.select_next_item(select_opts)
-              elseif vim.snippet.active({direction = 1}) then
-                require('snippets').expand_or_jump()
               elseif has_words_before() then
                 cmp.complete()
                 cmp.select_next_item(select_opts)
-              else
-                fallback() -- sends mapped key (probably '<Tab>')
+              else -- sometimes a <Tab> is just a <Tab>
+                fallback()
               end
             end, { 'i', 's' }),
             ['<S-Tab>'] = cmp.mapping(function(fallback) -- shift-tab backwards
               if cmp.visible() then
                 cmp.select_prev_item(select_opts)
-              elseif vim.snippet.active({direction = -1}) then
-                vim.snippet.jump(-1)
               else
                 fallback()
               end
@@ -328,13 +338,6 @@ require("lazy").setup({
         'hrsh7th/cmp-path',
         'hrsh7th/cmp-cmdline',
       },
-    },
-
-    -- support for snippets based on vim.snippet (neovim 0.10+)
-    {
-      "garymjr/nvim-snippets",
-      create_cmp_source = true, -- creates 'snippets' source
-      dependencies = {'hrsh7th/nvim-cmp'},
     },
 
     -------------------
