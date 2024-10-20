@@ -100,18 +100,60 @@ require("lazy").setup({
         -- server-specific settings. See `:help lspconfig-setup`
         lspconfig.clangd.setup {
           capabilities = capabilities,
+          flags = {
+            debounce_text_changes = 150,
+            allow_incremental_sync = false
+          },
+
+          -- add C/C++-specific key-bindings here
+          on_attach = function()
+          end,
+
+          -- uncomment this to disable semantic highlighting
+          --on_init = function(client)
+          --  client.server_capabilities.semanticTokensProvider = nil
+          --end,
         }
         lspconfig.gopls.setup {
           capabilities = capabilities,
+
+          -- add Go-specific key-bindings here
+          on_attach = function()
+          end,
         }
         lspconfig.lua_ls.setup {
           capabilities = capabilities,
+
+          -- add Lua-specific key-bindings here
+          on_attach = function()
+          end,
+
+          settings = {
+            Lua = {
+              runtime = {
+                version = 'LuaJIT',
+              },
+              workspace = {
+                maxPreload = 10000,
+                preloadFileSize = 1000,
+              },
+            },
+          },
         }
         lspconfig.pyright.setup {
           capabilities = capabilities,
+
+          -- add Python-specific key-bindings here
+          on_attach = function()
+          end,
         }
         lspconfig.rust_analyzer.setup {
           capabilities = capabilities,
+
+          -- add Rust-specific key-bindings here
+          on_attach = function()
+          end,
+
           settings = {
             ['rust-analyzer'] = {},
           },
@@ -225,9 +267,21 @@ require("lazy").setup({
           },
 
           sources = {
-            {name = 'nvim_lsp', group_index = 1},
-            {name = 'path', group_index = 1},
-            {name = 'buffer', group_index = 2},
+            {
+              name = 'nvim_lsp',
+              group_index = 1,
+              keyword_length = 3,
+            },
+            {
+              name = 'path',
+              group_index = 1,
+              keyword_length = 4,
+            },
+            {
+              name = 'buffer',
+              group_index = 2,
+              keyword_length = 3,
+            },
           },
 
           -- preselect a menu item
@@ -235,7 +289,7 @@ require("lazy").setup({
 
           -- supertab!
           mapping = cmp.mapping.preset.insert({
-            ['<Enter>'] = cmp.mapping.confirm({select = true }),
+            ['<Space>'] = cmp.mapping.confirm({select = true }),
             ['<Tab>'] = cmp.mapping(function(fallback) -- tab autocompletion
               cmp.complete()
               if cmp.visible() then
