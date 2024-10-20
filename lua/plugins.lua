@@ -138,15 +138,23 @@ require("lazy").setup({
     {
       'hrsh7th/nvim-cmp',
       config = function()
+        local cmp = require('cmp')
+
+        -- true iff e.g. the cursor is in the middle of a word
         local has_words_before = function()
           local cursor = vim.api.nvim_win_get_cursor(0)
           return cursor[2] ~= 0 and
                  (vim.api.nvim_buf_get_lines(0, cursor[1] - 1, cursor[1], true)[1] or ''):sub(cursor[2], cursor[2]):match('%s') == nil
         end
 
-        local cmp = require('cmp')
-
+        -- pass this to cmp.select_{prev/next}_item for insert-selection-in-situ
         local select_opt = {behavior = cmp.SelectBehavior.Insert}
+        -- key mapping function for close-and-passthrough (supertab <CR>, <Space>)
+        local close_and_passthrough = function(fallback)
+          cmp.close()
+          fallback()
+        end
+
         cmp.setup{
           completion = {
             autocomplete = false, -- not while I'm typing, please
@@ -210,8 +218,9 @@ require("lazy").setup({
 
           -- supertab!
           mapping = cmp.mapping.preset.insert({
-            ['<CR>'] = cmp.mapping.confirm({select = true }),
-            ['<Space>'] = cmp.mapping.confirm({select = true }),
+            -- <CR> and <Space> close the menu and do a passthrough
+            ['<CR>'] = cmp.mapping(close_and_passthrough),
+            ['<Space>'] = cmp.mapping(close_and_passthrough),
             ['<Tab>'] = cmp.mapping(function(fallback) -- tab autocompletion
               if has_words_before() then -- not at beginning of line
                 cmp.complete()
