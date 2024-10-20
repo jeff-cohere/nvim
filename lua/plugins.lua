@@ -99,101 +99,7 @@ require("lazy").setup({
     {
       'neovim/nvim-lspconfig',
       config = function()
-        -- Show line diagnostics automatically in hover window
-        vim.diagnostic.config{
-          virtual_text = false,
-        }
-        vim.o.updatetime = 250
-        vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]]
-
-        -- lsp configuration
-        local capabilities = require('cmp_nvim_lsp').default_capabilities()
-        local lspconfig = require('lspconfig')
-
-        -- server-specific settings. See `:help lspconfig-setup`
-        lspconfig.clangd.setup {
-          capabilities = capabilities,
-          flags = {
-            debounce_text_changes = 150,
-            allow_incremental_sync = false
-          },
-
-          -- add C/C++-specific key-bindings here
-          on_attach = function()
-          end,
-
-          -- uncomment this to disable semantic highlighting
-          --on_init = function(client)
-          --  client.server_capabilities.semanticTokensProvider = nil
-          --end,
-        }
-        lspconfig.gopls.setup {
-          capabilities = capabilities,
-
-          -- add Go-specific key-bindings here
-          on_attach = function()
-          end,
-        }
-        lspconfig.lua_ls.setup {
-          capabilities = capabilities,
-
-          -- add Lua-specific key-bindings here
-          on_attach = function()
-          end,
-
-          settings = {
-            Lua = {
-              diagnostics = {
-                globals = {'vim'}, -- dear lua_ls: `vim` is a thing
-              },
-              runtime = {
-                version = 'LuaJIT',
-              },
-              workspace = {
-                maxPreload = 10000,
-                preloadFileSize = 1000,
-              },
-            },
-          },
-        }
-        lspconfig.pyright.setup {
-          capabilities = capabilities,
-
-          -- add Python-specific key-bindings here
-          on_attach = function()
-          end,
-        }
-        lspconfig.rust_analyzer.setup {
-          capabilities = capabilities,
-
-          -- add Rust-specific key-bindings here
-          on_attach = function()
-          end,
-
-          settings = {
-            ['rust-analyzer'] = {},
-          },
-        }
-
-        -- context-dependent commands made available upon attaching to a language
-        -- server with a relevant file
-        vim.api.nvim_create_autocmd('LspAttach', {
-          desc = 'LSP actions',
-          callback = function(event)
-            local opts = {buffer = event.buf}
-
-            vim.keymap.set('n', 'K', '<cmd>lua vim.lsp.buf.hover()<cr>', opts)
-            vim.keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>', opts)
-            vim.keymap.set('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<cr>', opts)
-            vim.keymap.set('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<cr>', opts)
-            vim.keymap.set('n', 'go', '<cmd>lua vim.lsp.buf.type_definition()<cr>', opts)
-            vim.keymap.set('n', 'gr', '<cmd>lua vim.lsp.buf.references()<cr>', opts)
-            vim.keymap.set('n', 'gs', '<cmd>lua vim.lsp.buf.signature_help()<cr>', opts)
-            vim.keymap.set('n', '<F2>', '<cmd>lua vim.lsp.buf.rename()<cr>', opts)
-            vim.keymap.set({'n', 'x'}, '<F3>', '<cmd>lua vim.lsp.buf.format({async = true})<cr>', opts)
-            vim.keymap.set('n', '<F4>', '<cmd>lua vim.lsp.buf.code_action()<cr>', opts)
-          end,
-        })
+        require('lsp') -- see lsp.lua for config details
       end,
     },
 
@@ -234,6 +140,7 @@ require("lazy").setup({
       config = function()
         local has_words_before = function()
           local cursor = vim.api.nvim_win_get_cursor(0)
+          if cursor[2] == 0 then return false end
           return (vim.api.nvim_buf_get_lines(0, cursor[1] - 1, cursor[1], true)[1] or ''):sub(cursor[2], cursor[2]):match('%s')
         end
 
@@ -303,6 +210,7 @@ require("lazy").setup({
 
           -- supertab!
           mapping = cmp.mapping.preset.insert({
+            ['<CR>'] = cmp.mapping.confirm({select = true }),
             ['<Space>'] = cmp.mapping.confirm({select = true }),
             ['<Tab>'] = cmp.mapping(function(fallback) -- tab autocompletion
               cmp.complete()
