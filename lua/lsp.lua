@@ -13,7 +13,9 @@ vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {f
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 local lspconfig = require('lspconfig')
 
--- server-specific settings. See `:help lspconfig-setup`
+-- server-specific settings ( see `:help lspconfig-setup`)
+
+-- c/c++/objective-c/etc
 lspconfig.clangd.setup {
   capabilities = capabilities,
   flags = {
@@ -21,8 +23,7 @@ lspconfig.clangd.setup {
     allow_incremental_sync = false
   },
 
-          -- add C/C++-specific key-bindings here
-  on_attach = function()
+  on_attach = function() -- specific key bindings
   end,
 
   -- uncomment this to disable semantic highlighting

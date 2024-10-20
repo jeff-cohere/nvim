@@ -94,12 +94,12 @@ require("lazy").setup({
       },
     },
 
-    -- pre-fab config files for language servers
+    -- language server configuration (see lsp.lua for details)
     {'hrsh7th/cmp-nvim-lsp', lazy = true},
     {
       'neovim/nvim-lspconfig',
       config = function()
-        require('lsp') -- see lsp.lua for config details
+        require('lsp')
       end,
     },
 
