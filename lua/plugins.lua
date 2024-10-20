@@ -140,13 +140,13 @@ require("lazy").setup({
       config = function()
         local has_words_before = function()
           local cursor = vim.api.nvim_win_get_cursor(0)
-          if cursor[2] == 0 then return false end
-          return (vim.api.nvim_buf_get_lines(0, cursor[1] - 1, cursor[1], true)[1] or ''):sub(cursor[2], cursor[2]):match('%s')
+          return cursor[2] ~= 0 and
+                 (vim.api.nvim_buf_get_lines(0, cursor[1] - 1, cursor[1], true)[1] or ''):sub(cursor[2], cursor[2]):match('%s') == nil
         end
 
         local cmp = require('cmp')
 
-        local select_opts = {behavior = cmp.SelectBehavior.Select}
+        local select_opt = {behavior = cmp.SelectBehavior.Insert}
         cmp.setup{
           completion = {
             autocomplete = false, -- not while I'm typing, please
@@ -213,19 +213,18 @@ require("lazy").setup({
             ['<CR>'] = cmp.mapping.confirm({select = true }),
             ['<Space>'] = cmp.mapping.confirm({select = true }),
             ['<Tab>'] = cmp.mapping(function(fallback) -- tab autocompletion
-              cmp.complete()
-              if cmp.visible() then -- completion menu present
-                cmp.select_next_item(select_opts)
-              elseif has_words_before() then
+              if has_words_before() then -- not at beginning of line
                 cmp.complete()
-                cmp.select_next_item(select_opts)
+                cmp.select_next_item(select_opt)
+              elseif cmp.visible() then -- completion menu present
+                cmp.select_next_item(select_opt)
               else -- sometimes a <Tab> is just a <Tab>
                 fallback()
               end
             end, { 'i', 's' }),
             ['<S-Tab>'] = cmp.mapping(function(fallback) -- shift-tab backwards
               if cmp.visible() then
-                cmp.select_prev_item(select_opts)
+                cmp.select_prev_item(select_opt)
               else
                 fallback()
               end
