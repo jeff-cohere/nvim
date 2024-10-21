@@ -270,7 +270,10 @@ require("lazy").setup({
     -------------------
 
     -- gruvbox is best girl
-    'ellisonleao/gruvbox.nvim',
+    {
+      'ellisonleao/gruvbox.nvim',
+      priority = 1000,
+    },
 
     -- tokyonight is alright
     'folke/tokyonight.nvim',

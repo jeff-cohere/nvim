@@ -33,12 +33,9 @@ end)
 -- update more frequently
 vim.opt.updatetime = 250
 
--- try to set the color scheme
+-- color scheme guidance
 vim.opt.termguicolors=true
 vim.opt.background='dark'
-local success, result = pcall(function()
-  vim.cmd.colorscheme('gruvbox')
-end)
 
 vim.opt.foldmethod='indent'
 vim.opt.foldenable=false
