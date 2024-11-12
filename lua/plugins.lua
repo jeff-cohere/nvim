@@ -104,6 +104,41 @@ require("lazy").setup({
       end,
     },
 
+    -- treesitter fancypants syntax highlighting
+    {
+      'nvim-treesitter/nvim-treesitter',
+      config = function()
+        require('nvim-treesitter.configs').setup {
+          -- a list of parser names, or "all" (the listed parsers MUST always be installed)
+          ensure_installed = { "c", "go", "lua", "vim", "vimdoc", "query", "markdown", "markdown_inline" },
+
+          -- install parsers synchronously (only applied to `ensure_installed`)
+          sync_install = false,
+
+          -- automatically install missing parsers when entering buffer
+          -- (set to false if you don't have `tree-sitter` CLI installed locally)
+          auto_install = false,
+
+          -- list of parsers to ignore installing (or "all")
+          ignore_install = { "javascript" },
+
+          highlight = {
+            enable = true,
+
+            -- disabled parsers (NOTE: parser names, not file type names)
+            -- disable = {"c", "rust" },
+            -- NOTE: can also use a function for more flexibility
+            --disable = function(lang, buf)
+            --end,
+
+            -- setting to true will run `:h syntax` and tree-sitter at the same
+            -- time
+            additional_vim_regex_highlighting = false,
+          },
+        }
+      end
+    },
+
     -- file manager in a buffer
     {
       'nvim-neo-tree/neo-tree.nvim',
