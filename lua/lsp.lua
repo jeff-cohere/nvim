@@ -50,7 +50,10 @@ lspconfig.lua_ls.setup {
   settings = {
     Lua = {
       diagnostics = {
-        globals = {'vim'}, -- dear lua_ls: `vim` is a thing
+        globals = {
+          'love', -- game development
+          'vim',  -- neovim API
+        },
       },
       runtime = {
         version = 'LuaJIT',

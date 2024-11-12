@@ -1,5 +1,13 @@
+require('math')
+require('os')
+
 require('settings')
 require('plugins')
 require('mappings')
 
-vim.cmd.colorscheme('gruvbox')
+colorschemes = {
+  'gruvbox',
+  'tokyonight',
+}
+math.randomseed(os.time())
+vim.cmd.colorscheme(colorschemes[math.random(#colorschemes)])
