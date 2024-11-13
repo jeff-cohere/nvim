@@ -110,7 +110,8 @@ require("lazy").setup({
       config = function()
         require('nvim-treesitter.configs').setup {
           -- a list of parser names, or "all" (the listed parsers MUST always be installed)
-          ensure_installed = { "c", "go", "lua", "vim", "vimdoc", "query", "markdown", "markdown_inline" },
+          ensure_installed = { "c", "go", "lua", "vim", "vimdoc", "query",
+                               "markdown", "markdown_inline" },
 
           -- install parsers synchronously (only applied to `ensure_installed`)
           sync_install = false,
@@ -126,7 +127,7 @@ require("lazy").setup({
             enable = true,
 
             -- disabled parsers (NOTE: parser names, not file type names)
-            -- disable = {"c", "rust" },
+            --disable = {"c", "rust" },
             -- NOTE: can also use a function for more flexibility
             --disable = function(lang, buf)
             --end,
@@ -312,6 +313,9 @@ require("lazy").setup({
 
     -- tokyonight is alright
     'folke/tokyonight.nvim',
+
+    -- melange is the new warmness
+    'savq/melange-nvim',
 
     -- oldies but goodies
     'iCyMind/NeoSolarized',
