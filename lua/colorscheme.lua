@@ -1,13 +1,18 @@
 local colorschemes = {
-  'gruvbox',
-  'tokyonight',
-  'NeoSolarized',
-  'palenight',
-  'desert',
   'darkblue',
-  'koehler',
+  'desert',
   'elflord',
+  'gruvbox',
+  'habamax',
+  'koehler',
   'melange',
+  'NeoSolarized',
+  'OceanicNext',
+  'one',
+  'palenight',
+  'slate',
+  'tokyonight',
+  'zaibatsu',
 }
 
 math.randomseed(os.time())
