@@ -1,6 +1,5 @@
 local colorschemes = {
   'darkblue',
-  'desert',
   'elflord',
   'gruvbox',
   'habamax',
@@ -11,6 +10,7 @@ local colorschemes = {
   'one',
   'palenight',
   'slate',
+  'sorbet',
   'tokyonight',
   'zaibatsu',
 }
