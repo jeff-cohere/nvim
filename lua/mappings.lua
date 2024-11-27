@@ -2,6 +2,10 @@
 -- Key Mappings --
 ------------------
 
+-- jump to next and previous compile errors
+vim.keymap.set('n', ']g', vim.diagnostic.goto_next)
+vim.keymap.set('n', '[g', vim.diagnostic.goto_prev)
+
 vim.cmd([[
 " Ctrl-X lists current buffers.
 map <C-X> :buffers<CR>
