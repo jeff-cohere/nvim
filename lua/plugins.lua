@@ -22,11 +22,8 @@ require("lazy").setup({
     -- snazzy buffer line
     {
       'akinsho/bufferline.nvim',
-      config = function()
-        require("bufferline").setup{}
-      end,
       dependencies = 'nvim-tree/nvim-web-devicons',
-      versions = '*',
+      version = '*',
     },
 
     -- improved default UI
