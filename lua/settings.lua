@@ -107,6 +107,15 @@ vim.opt.lazyredraw=true
 -- use a ruler at the bottom line to indicate location in a file
 vim.opt.ruler=true
 
+-- highlighting trailing whitespace
+vim.opt.listchars = {
+  space = '.',
+  tab = '|-',
+  trail = '.',
+}
+vim.cmd([[match TrailingWhitespace /\s\+$/]])
+vim.api.nvim_set_hl(0, "TrailingWhitespace", { link = "Error" })
+
 -- \reload -> reload configuration and plugins
 vim.keymap.set('n', '<Leader>rc', ':source $MYVIMRC<CR>')
 

@@ -55,7 +55,7 @@ require("lazy").setup({
         require('lualine').setup{}
       end,
       options = {
-        theme = 'gruvbox',
+        theme = 'auto',
       },
       dependencies = { 'nvim-tree/nvim-web-devicons', lazy = true },
     },
