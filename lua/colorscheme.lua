@@ -1,17 +1,7 @@
 local colorschemes = {
-  'darkblue',
-  'elflord',
   'gruvbox',
-  'habamax',
-  --'koehler',
-  'melange',
   'NeoSolarized',
   'OceanicNext',
-  'one',
-  'pablo',
-  'palenight',
-  'slate',
-  'sorbet',
   'tokyonight',
   'zaibatsu',
 }
