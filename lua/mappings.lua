@@ -11,18 +11,23 @@ vim.keymap.set('n', '<C-X>', function()
   require("buffer_manager.ui").toggle_quick_menu()
 end)
 
+-- file manager toggle
+vim.keymap.set('n', '<C-F>', function()
+  vim.cmd([[:Neotree filesystem reveal_force_cwd=true action=show toggle=true]])
+end)
+
 vim.cmd([[
 " Ctrl-X lists current buffers.
 "map <C-X> :buffers<CR>
 
 " Ctrl-T toggles the tag list.
-map <C-T> :TlistToggle<CR>
+"map <C-T> :TlistToggle<CR>
 
 " Ctrl-L toggles line numbers.
 map <C-L> :set number!<CR>
 
 " Ctrl-F toggles folding.
-map <C-F> :set foldenable!<CR>
+"map <C-F> :set foldenable!<CR>
 
 " Esc exits terminal mode.
 tnoremap <Esc> <C-\><C-n>
