@@ -6,9 +6,14 @@
 vim.keymap.set('n', ']g', vim.diagnostic.goto_next)
 vim.keymap.set('n', '[g', vim.diagnostic.goto_prev)
 
+-- buffer management
+vim.keymap.set('n', '<C-X>', function()
+  require("buffer_manager.ui").toggle_quick_menu()
+end)
+
 vim.cmd([[
 " Ctrl-X lists current buffers.
-map <C-X> :buffers<CR>
+"map <C-X> :buffers<CR>
 
 " Ctrl-T toggles the tag list.
 map <C-T> :TlistToggle<CR>

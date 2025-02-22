@@ -137,6 +137,14 @@ require("lazy").setup({
       end
     },
 
+    -- buffer manager in a floating window
+    {
+      'j-morano/buffer_manager.nvim',
+      config = function()
+        require("buffer_manager").setup{}
+      end,
+    },
+
     -- file manager in a buffer
     {
       'nvim-neo-tree/neo-tree.nvim',
