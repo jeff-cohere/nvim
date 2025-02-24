@@ -165,7 +165,15 @@ require("lazy").setup({
     'nvim-lua/plenary.nvim',
 
     -- highlighter of TODO:, FIXME:, and other such comments
-    'folke/todo-comments.nvim',
+    {
+      "folke/todo-comments.nvim",
+      dependencies = { "nvim-lua/plenary.nvim" },
+      opts = {
+        -- your configuration comes here
+        -- or leave it empty to use the default settings
+        -- refer to the configuration section below
+      }
+    },
 
     -- cutesy little diagnostic doots
     'folke/trouble.nvim',
