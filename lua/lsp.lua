@@ -18,6 +18,7 @@ local lspconfig = require('lspconfig')
 -- c/c++/objective-c/etc
 lspconfig.clangd.setup {
   capabilities = capabilities,
+  cmd = {'clangd', '--background-index', '--clang-tidy', '--log=verbose'},
   flags = {
     debounce_text_changes = 150,
     allow_incremental_sync = false
