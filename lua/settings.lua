@@ -13,9 +13,9 @@ vim.g.maplocalleader = ' '
 -- add a sign column to avoid shifting
 vim.opt.signcolumn = 'yes' -- yup, that's 'yes', not true
 
--- show the 80th column
+-- show the 100th column
 if vim.opt.colorcolumn then
-  vim.opt.colorcolumn = '80'
+  vim.opt.colorcolumn = '100'
   vim.cmd('highlight ColorColumn ctermbg=9')
 end
 
