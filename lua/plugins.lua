@@ -68,27 +68,11 @@ require("lazy").setup({
       end,
     },
     {
-      "williamboman/mason-lspconfig.nvim",
-      config = function()
-        require("mason-lspconfig").setup{
-          -- looks like this vvv requires npm, which is gross
-          --ensure_installed = {
-          --  "bashls",
-          --  "clangd",
-          --  "cssls",
-          --  "dockerls",
-          --  "gopls",
-          --  "html",
-          --  "jsonls",
-          --  "pyright",
-          --  "sqlls",
-          --  "yamlls"
-          --},
-        }
-      end,
+      "mason-org/mason-lspconfig.nvim",
+      opts = {},
       dependencies = {
-        'mason.nvim',
-        'nvim-lspconfig',
+        { "mason-org/mason.nvim", opts = {} },
+        "neovim/nvim-lspconfig",
       },
     },
 

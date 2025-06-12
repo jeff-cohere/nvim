@@ -2,6 +2,7 @@ local colorschemes = {
   'gruvbox',
   'NeoSolarized',
   'OceanicNext',
+  'slate',
   'tokyonight',
   'zaibatsu',
 }
