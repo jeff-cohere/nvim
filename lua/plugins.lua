@@ -60,15 +60,15 @@ require("lazy").setup({
       dependencies = { 'nvim-tree/nvim-web-devicons', lazy = true },
     },
 
-    -- a package manager for language servers, linters, etc: super dweeb stuff
+    -- mason: a package manager for language servers, linters, etc: super dweeb stuff
     {
-      "williamboman/mason.nvim",
-      config = function()
-        require("mason").setup{}
-      end,
+      "mason-org/mason.nvim",
+      version = "1.11.0", -- FIXME: pinned cuz breakage
+      opts = {}
     },
     {
       "mason-org/mason-lspconfig.nvim",
+      version = "1.32.0", -- FIXME: pinned cuz breakage
       opts = {},
       dependencies = {
         { "mason-org/mason.nvim", opts = {} },
@@ -80,6 +80,16 @@ require("lazy").setup({
     {'hrsh7th/cmp-nvim-lsp', lazy = true},
     {
       'neovim/nvim-lspconfig',
+      dependencies = {
+        {
+          "hasansujon786/nvim-navbuddy",
+          dependencies = {
+            "SmiteshP/nvim-navic",
+            "MunifTanjim/nui.nvim"
+          },
+          opts = { lsp = { auto_attach = true } }
+        }
+      },
       config = function()
         require('lsp')
       end,
