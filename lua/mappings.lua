@@ -11,10 +11,18 @@ vim.keymap.set('n', '<C-X>', function()
   require("buffer_manager.ui").toggle_quick_menu()
 end)
 
--- file manager toggle
+-- toggle file manager
 vim.keymap.set('n', '<C-F>', function()
   vim.cmd([[:Neotree filesystem reveal_force_cwd=true action=show toggle=true]])
 end)
+
+-- toggle line numbers
+vim.keymap.set('n', '<C-L>', function()
+  vim.wo.number = not vim.wo.number
+end)
+
+-- toggle navigation buddy
+vim.keymap.set('n', '<C-N>', require("nvim-navbuddy").open)
 
 vim.cmd([[
 " Ctrl-X lists current buffers.
@@ -24,7 +32,7 @@ vim.cmd([[
 "map <C-T> :TlistToggle<CR>
 
 " Ctrl-L toggles line numbers.
-map <C-L> :set number!<CR>
+"map <C-L> :set number!<CR>
 
 " Ctrl-F toggles folding.
 "map <C-F> :set foldenable!<CR>
