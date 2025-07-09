@@ -4,7 +4,7 @@ local colorschemes = {
   'OceanicNext',
   'slate',
   'tokyonight',
-  'zaibatsu',
+  'habamax',
 }
 
 math.randomseed(os.time())
