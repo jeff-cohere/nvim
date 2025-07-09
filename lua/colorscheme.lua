@@ -1,10 +1,15 @@
 local colorschemes = {
   'gruvbox',
+  'habamax',
+  'murphy',
   'NeoSolarized',
   'OceanicNext',
+  'one',
+  'ron',
   'slate',
   'tokyonight',
-  'habamax',
+  'torte',
+  'unokai',
 }
 
 math.randomseed(os.time())
