@@ -178,6 +178,9 @@ require("lazy").setup({
     -- clippy for key bindings
     'folke/which-key.nvim',
 
+    -- hex editing
+    {'RaafatTurki/hex.nvim'},
+
     -- neovim-flavored auto-completion
     {
       'hrsh7th/nvim-cmp',

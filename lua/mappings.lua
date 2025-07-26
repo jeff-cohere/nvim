@@ -21,6 +21,11 @@ vim.keymap.set('n', '<C-L>', function()
   vim.wo.number = not vim.wo.number
 end)
 
+-- toggle hex editor mode
+vim.keymap.set('n', '<C-H>', function()
+  require 'hex'.toggle()
+end)
+
 -- toggle navigation buddy
 vim.keymap.set('n', '<C-N>', require("nvim-navbuddy").open)
 
