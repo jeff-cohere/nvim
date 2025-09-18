@@ -51,6 +51,9 @@ lspconfig.gopls.setup {
   end,
 }
 
+-- odin
+lspconfig.ols.setup{}
+
 -- lua
 lspconfig.lua_ls.setup {
   capabilities = capabilities,
