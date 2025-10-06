@@ -11,12 +11,9 @@ vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {f
 
 -- lsp configuration
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
-local lspconfig = require('lspconfig')
-
--- server-specific settings ( see `:help lspconfig-setup`)
 
 -- c/c++/objective-c/etc
-lspconfig.clangd.setup {
+vim.lsp.config('clangd', {
   capabilities = capabilities,
   cmd = {'clangd', '--background-index', '--clang-tidy', '--log=verbose'},
   flags = {
@@ -31,10 +28,10 @@ lspconfig.clangd.setup {
   --on_init = function(client)
   --            client.server_capabilities.semanticTokensProvider = nil
   --          end,
-}
+})
 
  -- go
-lspconfig.gopls.setup {
+vim.lsp.config('gopls', {
   capabilities = capabilities,
   cmd = {'gopls'},
   filetypes = { 'go', 'gomod', 'gowork', 'gotmpl' },
@@ -49,13 +46,13 @@ lspconfig.gopls.setup {
   },
   on_attach = function() -- specific key bindings
   end,
-}
+})
 
 -- odin
-lspconfig.ols.setup{}
+vim.lsp.config('ols', {})
 
 -- lua
-lspconfig.lua_ls.setup {
+vim.lsp.config('lua_ls', {
   capabilities = capabilities,
 
   on_attach = function() -- specific key bindings
@@ -78,18 +75,18 @@ lspconfig.lua_ls.setup {
       },
     },
   },
-}
+})
 
 -- python
-lspconfig.pyright.setup {
+vim.lsp.config('pyright', {
   capabilities = capabilities,
 
   on_attach = function() -- specific key bindings
   end,
-}
+})
 
 -- rust
-lspconfig.rust_analyzer.setup {
+vim.lsp.config('rust_analyzer', {
   capabilities = capabilities,
 
   on_attach = function() -- specific key bindings
@@ -98,7 +95,7 @@ lspconfig.rust_analyzer.setup {
   settings = {
     ['rust-analyzer'] = {},
   },
-}
+})
 
 -- context-dependent commands made available upon attaching to a language
 -- server with a relevant file
