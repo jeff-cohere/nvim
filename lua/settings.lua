@@ -82,7 +82,7 @@ highlight Search ctermbg=9
 vim.opt.visualbell=false
 
 -- show matched parens
-vim.opt.showmatch=true
+--vim.opt.showmatch=true
 
 -- split new windows below old ones
 vim.opt.splitbelow=true
