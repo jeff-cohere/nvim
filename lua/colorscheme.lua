@@ -15,7 +15,7 @@ local colorschemes = {
 
 math.randomseed(os.time())
 local selected = colorschemes[math.random(#colorschemes)]
-selected = 'blue' -- for now
+selected = 'NeoSolarized' -- for now
 
 local status, _ = pcall(vim.cmd, 'colorscheme ' .. selected)
 if not status then
