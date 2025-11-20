@@ -66,17 +66,7 @@ require("lazy").setup({
       version = "1.11.0", -- FIXME: pinned cuz breakage
       opts = {}
     },
-    --{
-    --  "mason-org/mason-lspconfig.nvim",
-    --  version = "1.32.0", -- FIXME: pinned cuz breakage
-    --  opts = {},
-    --  dependencies = {
-    --    { "mason-org/mason.nvim", opts = {} },
-    --    "neovim/nvim-lspconfig",
-    --  },
-    --},
 
-    -- navbuddy: breadcrumbs for LSPs
     {
       'hasansujon786/nvim-navbuddy',
        dependencies = {
@@ -84,25 +74,6 @@ require("lazy").setup({
          'MunifTanjim/nui.nvim'
        },
     },
-
-    -- language server configuration (see lsp.lua for details)
-    --{'hrsh7th/cmp-nvim-lsp', lazy = true},
-    --{
-    --  'neovim/nvim-lspconfig',
-    --  dependencies = {
-    --    {
-    --      "hasansujon786/nvim-navbuddy",
-    --      dependencies = {
-    --        "SmiteshP/nvim-navic",
-    --        "MunifTanjim/nui.nvim"
-    --      },
-    --      opts = { lsp = { auto_attach = true } }
-    --    }
-    --  },
-    --  config = function()
-    --    require('lsp')
-    --  end,
-    --},
 
     -- treesitter fancypants syntax highlighting
     {
@@ -270,135 +241,6 @@ require("lazy").setup({
       },
       opts_extend = { "sources.default" }
     },
-
-    --{
-    --  'hrsh7th/nvim-cmp',
-    --  config = function()
-    --    local cmp = require('cmp')
-    --
-    --    -- true iff e.g. the cursor is in the middle of a word
-    --    local has_words_before = function()
-    --      local cursor = vim.api.nvim_win_get_cursor(0)
-    --      return cursor[2] ~= 0 and
-    --             (vim.api.nvim_buf_get_lines(0, cursor[1] - 1, cursor[1], true)[1] or ''):sub(cursor[2], cursor[2]):match('%s') == nil
-    --    end
-
-    --    -- pass this to cmp.select_{prev/next}_item for insert-selection-in-situ
-    --    local select_opt = {behavior = cmp.SelectBehavior.Insert}
-    --    -- key mapping function for supertab <CR>, <Space>
-    --    local close_and_passthrough = function(fallback)
-    --      cmp.close()
-    --      fallback()
-    --    end
-    --    -- key mapping function for supertab <BS>
-    --    local close_if_empty_and_passthrough = function(fallback)
-    --      if not has_words_before() then
-    --        cmp.close()
-    --      end
-    --      fallback()
-    --    end
-
-    --    cmp.setup{
-    --      completion = {
-    --        autocomplete = false, -- not while I'm typing, please
-    --      },
-
-    --      snippet = {
-    --        expand = function(args)
-    --          -- a snippet engine is required by nvim-cmp :-/
-    --          -- fortunately, vim 0.10+ has its own
-    --          vim.snippet.expand(args.body)
-    --        end,
-    --      },
-
-    --      formatting = {
-    --        format = function(entry, vim_item)
-    --          -- fancy icons and a name of kind
-    --          local import_lspkind, lspkind = pcall(require, "lspkind")
-    --          if import_lspkind then
-    --            vim_item.kind = lspkind.presets.default[vim_item.kind]
-    --          end
-
-    --          -- limit completion width
-    --          local ELLIPSIS_CHAR = '…'
-    --          local MAX_LABEL_WIDTH = 35
-    --          local label = vim_item.abbr
-    --          local truncated_label = vim.fn.strcharpart(label, 0, MAX_LABEL_WIDTH)
-    --          if truncated_label ~= label then
-    --            vim_item.abbr = truncated_label .. ELLIPSIS_CHAR
-    --          end
-
-    --          -- set a name for each source
-    --          vim_item.menu = ({
-    --            buffer = "[Buffer]",
-    --            nvim_lsp = "[LSP]",
-    --            path = "[Path]",
-    --          })[entry.source.name]
-    --          return vim_item
-    --        end,
-    --      },
-
-    --      sources = {
-    --        {
-    --          name = 'nvim_lsp',
-    --          group_index = 1,
-    --          keyword_length = 3,
-    --        },
-    --        {
-    --          name = 'path',
-    --          group_index = 1,
-    --          keyword_length = 4,
-    --        },
-    --        {
-    --          name = 'buffer',
-    --          group_index = 2,
-    --          keyword_length = 3,
-    --        },
-    --      },
-    --
-    --      -- preselect a menu item
-    --      preselect = cmp.PreselectMode.Item,
-
-    --      -- supertab!
-    --      mapping = cmp.mapping.preset.insert({
-    --        -- <CR> and <Space> close the menu and do a passthrough
-    --        ['<CR>'] = cmp.mapping(close_and_passthrough),
-    --        ['<Space>'] = cmp.mapping(close_and_passthrough),
-    --        ['<BS>'] = cmp.mapping(close_if_empty_and_passthrough),
-    --        ['<Tab>'] = cmp.mapping(function(fallback) -- tab autocompletion
-    --          if has_words_before() then -- not at beginning of line
-    --            cmp.complete()
-    --            cmp.select_next_item(select_opt)
-    --          elseif cmp.visible() then -- completion menu present
-    --            cmp.select_next_item(select_opt)
-    --          else -- sometimes a <Tab> is just a <Tab>
-    --            fallback()
-    --          end
-    --        end, { 'i', 's' }),
-    --        ['<S-Tab>'] = cmp.mapping(function(fallback) -- shift-tab backwards
-    --          if cmp.visible() then
-    --            cmp.select_prev_item(select_opt)
-    --          else
-    --            fallback()
-    --          end
-    --        end, { 'i', 's' }),
-    --      }),
-
-    --      window = {
-    --        completion = cmp.config.window.bordered(),
-    --        documentation = cmp.config.window.bordered(),
-    --      },
-    --    }
-    --  end,
-
-    --  dependencies = {
-    --    'nvim-lspconfig',
-    --    'hrsh7th/cmp-nvim-lsp',
-    --    'hrsh7th/cmp-buffer',
-    --    'hrsh7th/cmp-path',
-    --    'hrsh7th/cmp-cmdline',
-    --  },
-    --},
 
     -------------------
     -- color schemes --
