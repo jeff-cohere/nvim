@@ -9,92 +9,65 @@ vim.diagnostic.config{
 vim.o.updatetime = 250
 vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]]
 
--- lsp configuration
---local capabilities = require('cmp_nvim_lsp').default_capabilities()
-
--- c/c++/objective-c/etc
-vim.lsp.config.clangd = {
-  capabilities = capabilities,
-  cmd = {'clangd', '--background-index', '--clang-tidy', '--log=verbose'},
-  flags = {
-    debounce_text_changes = 150,
-    allow_incremental_sync = false
+local lsps = {
+  {
+    "clangd",
+    {
+      cmd = {'clangd', '--background-index', '--clang-tidy', '--log=verbose'},
+      filetypes = { 'c', 'cpp', 'objc' },
+    },
   },
-
-  on_attach = function() -- specific key bindings
-  end,
-
-  -- uncomment this to disable semantic highlighting
-  --on_init = function(client)
-  --            client.server_capabilities.semanticTokensProvider = nil
-  --          end,
-}
-
- -- go
-vim.lsp.config.gopls = {
-  capabilities = capabilities,
-  cmd = {'gopls'},
-  filetypes = { 'go', 'gomod', 'gowork', 'gotmpl' },
-  settings = {
-    gopls = {
-      completeUnimported = true,
-      usePlaceholders = true,
-      analyses = {
-        unusedparams = true,
+  {
+    "gopls",
+    {
+      cmd = {'gopls'},
+      filetypes = { 'go', 'gomod', 'gowork', 'gotmpl' },
+      settings = {
+        gopls = {
+          completeUnimported = true,
+          usePlaceholders = true,
+          analyses = {
+            unusedparams = true,
+          },
+       },
       },
     },
   },
-  on_attach = function() -- specific key bindings
-  end,
-}
-
--- odin
-vim.lsp.config.ols = {}
-
--- lua
-vim.lsp.config.lua_ls = {
-  capabilities = capabilities,
-
-  on_attach = function() -- specific key bindings
-  end,
-
-  settings = {
-    Lua = {
-      diagnostics = {
-        globals = {
-          'love', -- game development
-          'vim',  -- neovim API
+  {
+    "lua_ls",
+    {
+      cmd = {'lua_ls'},
+      settings = {
+        Lua = {
+          diagnostics = {
+            globals = {
+              'love', -- game development
+              'vim',  -- neovim API
+            },
+          },
+          runtime = {
+            version = 'LuaJIT',
+          },
+          workspace = {
+            maxPreload = 10000,
+            preloadFileSize = 1000,
+          },
         },
       },
-      runtime = {
-        version = 'LuaJIT',
-      },
-      workspace = {
-        maxPreload = 10000,
-        preloadFileSize = 1000,
-      },
     },
   },
+  { "ols" },
+  { "pyright" },
+  { "rust_analyzer" },
 }
 
--- python
-vim.lsp.config.pyright = {
-  capabilities = capabilities,
-
-  on_attach = function() -- specific key bindings
-  end,
-}
-
--- rust
-vim.lsp.config.rust_analyzer = {
-  capabilities = capabilities,
-  on_attach = function() -- specific key bindings
-  end,
-  settings = {
-    ['rust-analyzer'] = {},
-  },
-}
-
+for _, lsp in pairs(lsps) do
+  local name, config = lsp[1], lsp[2]
+  vim.lsp.enable(name)
+  if config then
+    vim.lsp.config(name, config)
+  end
+end
 
 -- context-dependent commands made available upon attaching to a language
 -- server with a relevant file
@@ -120,7 +93,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
   end,
 })
 
--- set this to "debug" if you think it might help
+-- set this to "debug" when you think it might help, "off" when finished
 vim.lsp.log.set_level("off")
 
 vim.api.nvim_create_user_command("LspLogClear", function()
@@ -132,5 +105,7 @@ vim.lsp.enable({
   'clangd',
   'gopls',
   'lua_ls',
+  'ols',
+  'pyright',
   'rust-analyzer'
 })
