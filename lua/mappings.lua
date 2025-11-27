@@ -10,11 +10,6 @@ vim.keymap.set('n', '[g', vim.diagnostic.goto_prev)
 vim.keymap.set('n', 'gD', vim.lsp.buf.definition, { desc = 'LSP: go to definition' })
 vim.keymap.set('n', 'grt', vim.lsp.buf.type_definition, { desc = 'LSP: type definition' })
 
--- LSP completion
-vim.keymap.set('i', '<Tab>', function()
-  vim.lsp.completion.get()
-end)
-
 -- buffer management
 vim.keymap.set('n', '<C-X>', function()
   require("buffer_manager.ui").toggle_quick_menu()
