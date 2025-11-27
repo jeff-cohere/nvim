@@ -148,14 +148,12 @@ require("lazy").setup({
     -- file manager in a buffer
     {
       'nvim-neo-tree/neo-tree.nvim',
-      config = function()
-        require("neo-tree").setup{}
-      end,
       dependencies = {
         'nvim-lua/plenary.nvim',
         'nvim-tree/nvim-web-devicons',
         'MunifTanjim/nui.nvim',
       },
+      lazy = false,
     },
 
     -- UI component library
