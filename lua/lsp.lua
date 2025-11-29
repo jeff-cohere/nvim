@@ -56,7 +56,12 @@ local lsps = {
       },
     },
   },
-  { "ols" },
+  {
+    "ols",
+    {
+      cmd = {'ols'},
+    },
+  },
   { "pyright" },
   { "rust_analyzer" },
 }
@@ -66,6 +71,8 @@ for _, lsp in pairs(lsps) do
   vim.lsp.enable(name)
   if config then
     vim.lsp.config(name, config)
+  else
+    vim.lsp.config(name, {})
   end
 end
 
