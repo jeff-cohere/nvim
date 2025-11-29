@@ -37,6 +37,7 @@ local lsps = {
     "lua_ls",
     {
       cmd = {'lua_ls'},
+      filetypes = {'lua'},
       settings = {
         Lua = {
           diagnostics = {
@@ -60,6 +61,7 @@ local lsps = {
     "ols",
     {
       cmd = {'ols'},
+      filetypes = {'odin'},
     },
   },
   { "pyright" },
