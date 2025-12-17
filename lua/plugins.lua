@@ -262,6 +262,11 @@ require("lazy").setup({
       priority = 1000,
     },
 
+    -- kanagawa is bootiful
+    {
+      'rebelot/kanagawa.nvim',
+    },
+
     -- tokyonight is alright
     'folke/tokyonight.nvim',
 

@@ -2,6 +2,8 @@ local colorschemes = {
   'blue',
   'gruvbox',
   'habamax',
+  'kanagawa-dragon',
+  'kanagawa-wave',
   'murphy',
   'NeoSolarized',
   'OceanicNext',
