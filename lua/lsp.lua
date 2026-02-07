@@ -13,7 +13,13 @@ local lsps = {
   {
     "clangd",
     {
-      cmd = {'clangd', '--background-index', '--clang-tidy', '--log=verbose'},
+      cmd = {
+        'clangd',
+        '--background-index',
+        '--clang-tidy',
+        '--log=verbose',
+        '--compile-commands-dir=',
+      },
       filetypes = { 'c', 'cpp', 'objc' },
     },
   },

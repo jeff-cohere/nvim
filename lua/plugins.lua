@@ -201,6 +201,34 @@ require("lazy").setup({
       ---@module 'blink.cmp'
       ---@type blink.cmp.Config
       opts = {
+        appearance = {
+          -- 'mono' (default) for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
+          -- Adjusts spacing to ensure icons are aligned
+          nerd_font_variant = 'mono'
+        },
+    
+        -- (Default) Only show the documentation popup when manually triggered
+        completion = {
+          documentation = {
+            auto_show = true,
+            auto_show_delay_ms = 500,
+          },
+          ghost_text = {
+            enabled = true,
+            show_without_selection = true,
+            show_without_menu = true,
+          },
+          list = {
+            selection = {
+              auto_insert = true,
+              preselect = true,
+            }
+          },
+          menu = {
+            auto_show = false,
+          },
+        },
+
         -- 'default' (recommended) for mappings similar to built-in completions (C-y to accept)
         -- 'super-tab' for mappings similar to vscode (tab to accept)
         -- 'enter' for enter to accept
@@ -215,25 +243,6 @@ require("lazy").setup({
         -- See :h blink-cmp-config-keymap for defining your own keymap
         keymap = {
           preset = "super-tab",
-        },
-    
-        appearance = {
-          -- 'mono' (default) for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
-          -- Adjusts spacing to ensure icons are aligned
-          nerd_font_variant = 'mono'
-        },
-    
-        -- (Default) Only show the documentation popup when manually triggered
-        completion = {
-          documentation = {
-            auto_show = false
-          },
-          list = {
-            selection = {
-              auto_insert = true,
-              preselect = true,
-            }
-          },
         },
     
         -- Default list of enabled providers defined so that you can extend it
