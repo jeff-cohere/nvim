@@ -23,6 +23,14 @@ local lsps = {
       filetypes = { 'c', 'cpp', 'objc' },
     },
   },
+  -- someday we'll have Fortran...?
+  --{
+  --  "fortls",
+  --  {
+  --    cmd = "fortls",
+  --    filetypes = { 'fortran' }, --'f', 'f90', 'F90', 'f95' },
+  --  }
+  --},
   {
     "gopls",
     {
