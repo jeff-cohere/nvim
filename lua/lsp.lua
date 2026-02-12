@@ -23,14 +23,21 @@ local lsps = {
       filetypes = { 'c', 'cpp', 'objc' },
     },
   },
-  -- someday we'll have Fortran...?
-  --{
-  --  "fortls",
-  --  {
-  --    cmd = "fortls",
-  --    filetypes = { 'fortran' }, --'f', 'f90', 'F90', 'f95' },
-  --  }
-  --},
+  {
+    "fortls",
+    {
+      cmd = {
+        'fortls',
+        '--notify_init',
+        '--hover_signature',
+        '--hover_language=fortran',
+        '--use_signature_help',
+      },
+      filetypes = { 'fortran' },
+      root_markers = { '.fortls', '.fortlsrc', '.fortls.json', '.git' },
+      settings = {},
+    },
+  },
   {
     "gopls",
     {
