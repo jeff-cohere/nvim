@@ -39,6 +39,9 @@ require("lazy").setup({
         require('gitsigns').setup{}
       end,
     },
+    {
+      'tpope/vim-fugitive'
+    },
 
     -- indent guides
     {
