@@ -2,10 +2,6 @@
 -- Key Mappings --
 ------------------
 
--- jump to next and previous compile errors
-vim.keymap.set('n', ']g', vim.diagnostic.goto_next)
-vim.keymap.set('n', '[g', vim.diagnostic.goto_prev)
-
 -- jump to definition
 vim.keymap.set('n', 'gD', vim.lsp.buf.definition, { desc = 'LSP: go to definition' })
 vim.keymap.set('n', 'grt', vim.lsp.buf.type_definition, { desc = 'LSP: type definition' })
