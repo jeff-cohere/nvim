@@ -224,7 +224,7 @@ require("lazy").setup({
           },
           list = {
             selection = {
-              auto_insert = true,
+              auto_insert = false,
               preselect = true,
             }
           },
