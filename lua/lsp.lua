@@ -33,7 +33,7 @@ local lsps = {
         '--hover_language=fortran',
         '--use_signature_help',
       },
-      filetypes = { 'fortran' },
+      filetypes = { 'fortran', 'f90' },
       root_markers = { '.fortls', '.fortlsrc', '.fortls.json', '.git' },
       settings = {},
     },
@@ -107,7 +107,12 @@ vim.api.nvim_create_autocmd('LspAttach', {
     local client = vim.lsp.get_client_by_id(event.data.client_id)
     local opts = {buffer = event.buf}
     if client:supports_method('textDocument/completion') then
-      vim.lsp.completion.enable(true, client.id, event.buf, { autotrigger = true })
+      vim.lsp.completion.enable(true, client.id, event.buf, {
+        autotrigger = true,
+        convert = function(item)
+          return { abbr = item.label:gsub('%b()', '') }
+        end,
+      })
     end
 
     vim.keymap.set('n', 'K', '<cmd>lua vim.lsp.buf.hover()<cr>', opts)
@@ -120,6 +125,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     vim.keymap.set('n', '<F2>', '<cmd>lua vim.lsp.buf.rename()<cr>', opts)
     vim.keymap.set({'n', 'x'}, '<F3>', '<cmd>lua vim.lsp.buf.format({async = true})<cr>', opts)
     vim.keymap.set('n', '<F4>', '<cmd>lua vim.lsp.buf.code_action()<cr>', opts)
+    vim.keymap.set('i', '<C-space>', vim.lsp.completion.get, {desc = "trigger autocompletion"})
   end,
 })
 

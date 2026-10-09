@@ -41,7 +41,8 @@ vim.opt.foldmethod='indent'
 vim.opt.foldenable=false
 
 -- we want autocompletion on keypresses, not as we type
-vim.o.completeopt = 'longest,menu'
+vim.o.autocomplete = false
+vim.o.completeopt = 'menuone,noselect,popup'
 
 -- don't wrap lines
 vim.opt.wrap=false

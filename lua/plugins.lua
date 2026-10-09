@@ -189,7 +189,8 @@ require("lazy").setup({
     -- hex editing
     {'RaafatTurki/hex.nvim'},
 
-    -- neovim-flavored auto-completion
+    -- neovim-flavored auto-completion is now done via LSPs
+    --[[
     {
       'saghen/blink.cmp',
       -- optional: provides snippets for the snippet source
@@ -263,7 +264,7 @@ require("lazy").setup({
         fuzzy = { implementation = "prefer_rust_with_warning" }
       },
       opts_extend = { "sources.default" }
-    },
+    }, ]]--
 
     -------------------
     -- color schemes --
